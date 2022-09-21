@@ -10,6 +10,12 @@
     width: 2em;
 }
 
+.navbarbdr{
+    border-bottom-style: solid;
+    border-bottom-color: #3c67e3;
+    border-bottom-width: 3px;
+}
+
 .box-element{
     box-shadow: hsl(0, 0%, 80%) 0 0 16px;
     background-color: #fff;

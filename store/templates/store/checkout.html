@@ -1,0 +1,107 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box-element" id="form-wrapper">
+                <form id="form">
+                    <div id="user-info">
+
+                        <p>User Info</p>
+                        <hr>
+
+                        <div class="form-field">
+                            <input class="form-control" name="name" placeholder="Name" type="text" required>
+                        </div>
+                        
+                        <div class="form-field">
+                            <input class="form-control" name="email" placeholder="E-mail" type="email" required>
+                        </div>
+
+                    </div>
+                    
+                    <div id="shipping-info">
+
+                        <hr>
+                        <p>Shipping Info</p>
+                        <hr>
+                        
+                        <div class="form-field">
+                            <input class="form-control" name="address" placeholder="Address" type="text" required>
+                        </div>
+                        
+                        <div class="form-field">
+                            <input class="form-control" name="city" placeholder="City" type="text" required>
+                        </div>
+                        
+                        <div class="form-field">
+                            <input class="form-control" name="state" placeholder="State" type="text" required>
+                        </div>
+
+                        <div class="form-field">
+                            <input class="form-control" name="zip" placeholder="ZIP Code" type="text" required>
+                        </div>
+
+                    </div>
+                    
+                    <hr>
+                    <input style="width: 100%;" type="submit" class="btn btn-success btn-block" id="form-button" value="Continue">
+                </form>
+            </div>
+
+            <div class="box-element hidden mt-5" id="payment-info">
+                <small>PayTM/UPI/Credit Card</small>
+                <button style="float: right;" class="btn btn-sm btn-outline-success" id="make-payment">Make Payment</button>
+            </div>
+
+        </div>  
+    
+        <div class="col-lg-6">
+            <div class="box-element">
+                <a class="btn btn-outline-dark" href="{% url 'cart' %}">Back to Cart</a>
+                <hr>
+                <h3>Order Summary</h3>
+                <hr>
+
+                {% for item in items %}
+                    <div class="cart-row mb-5">
+                        <div style="flex: 2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+                        <div style="flex: 2">{{item.product.name}}</div>
+                        <div style="flex: 1">${{item.product.price}}</div>
+                        <div style="flex: 1">{{item.quantity}}</div>
+                    </div>
+                {% endfor %}  
+
+                <span style="float: right"><h5>Total: ${{order.get_cart_total}}</h5></span>
+                <h5>Items : {{order.get_cart_items}}</h5>
+
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    var shipping = '{{order.shipping}}'
+    if (shipping=='False'){
+        document.getElementById('shipping-info').innerHTML=''
+    }
+
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function(e){
+        e.preventDefault()
+        console.log("form submitted")
+        document.getElementById('form-button').classList.add('hidden')
+        document.getElementById('payment-info').classList.remove('hidden')
+    })
+
+    function submitFormData(){
+        console.log('')
+    }
+
+    document.getElementById('make-payment').addEventListener('click', function(e){
+        submitFormData()
+    })
+
+</script>
+
+{% endblock %}
